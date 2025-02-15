@@ -1,6 +1,5 @@
 package com.eshop.service.order_product_service.dto;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

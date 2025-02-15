@@ -1,7 +1,6 @@
 package com.eshop.service.order_product_service.controller;
 
 import com.eshop.service.order_product_service.dto.CreateProductRequest;
-import com.eshop.service.order_product_service.exception.ProductNotFoundException;
 import com.eshop.service.order_product_service.model.Product;
 import com.eshop.service.order_product_service.service.ProductService;
 import jakarta.validation.Valid;
@@ -10,9 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/products")
