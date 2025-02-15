@@ -42,7 +42,7 @@ public class ProductService {
     }
 
     public void deleteProduct(Long id) {
-        Product product = productRepository.findById(id).orElseThrow(ProductNotFoundException::new);
+        Product product = this.getProductById(id);
         productRepository.delete(product);
     }
 }
