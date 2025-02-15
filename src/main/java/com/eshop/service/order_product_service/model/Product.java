@@ -8,10 +8,13 @@ import lombok.*;
 
 import java.math.BigDecimal;
 
+
 @Entity
 @Table(name = "products")
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

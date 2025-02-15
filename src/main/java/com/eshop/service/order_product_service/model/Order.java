@@ -10,20 +10,11 @@ import java.util.Set;
 
 @Entity
 @Table(name = "orders")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
-
-
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
-
 
 @ElementCollection
     @CollectionTable(name = "order_product", joinColumns = @JoinColumn(name = "order_id"))
@@ -48,6 +39,11 @@ public class Order {
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    public Order(){
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
 
 
 }

@@ -1,7 +1,10 @@
 package com.eshop.service.order_product_service.controller;
 
+import com.eshop.service.order_product_service.dto.CreateOrderRequest;
+import com.eshop.service.order_product_service.exception.OrderNotFoundException;
 import com.eshop.service.order_product_service.model.Order;
 import com.eshop.service.order_product_service.service.OrderService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,32 +26,24 @@ public class OrderController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
-        Optional<Order> order = orderService.getOrderById(id);
-        return order.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return ResponseEntity.ok(orderService.getOrderById(id));
     }
 
     @PostMapping
-    public Order createOrder(@RequestBody Order order) {
-        return orderService.createOrder(order);
+    public ResponseEntity<Order> createOrder(@Valid @RequestBody CreateOrderRequest req) {
+        Order result = orderService.createOrder(req);
+        return  ResponseEntity.status(201).body(result);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Order> updateOrder(@PathVariable Long id, @RequestBody Order orderDetails) {
-        try {
-            Order updatedOrder = orderService.updateOrder(id, orderDetails);
+    public ResponseEntity<Order> updateOrder(@PathVariable Long id, @Valid @RequestBody CreateOrderRequest req) {
+            Order updatedOrder = orderService.updateOrder(id, req);
             return ResponseEntity.ok(updatedOrder);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
-        try {
             orderService.deleteOrder(id);
             return ResponseEntity.noContent().build();
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
     }
 }
