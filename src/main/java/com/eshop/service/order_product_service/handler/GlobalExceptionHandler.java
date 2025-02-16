@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.eshop.service.order_product_service.handler.BusinessErrorCodes.ORDER_NOT_FOUND;
 import static com.eshop.service.order_product_service.handler.BusinessErrorCodes.PRODUCT_NOT_FOUND;
@@ -40,6 +39,7 @@ public class GlobalExceptionHandler {
                         .build()
         );
     }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ExceptionResponse> handleValidationException(MethodArgumentNotValidException ex) {
         List<String> errors = ex.getBindingResult()

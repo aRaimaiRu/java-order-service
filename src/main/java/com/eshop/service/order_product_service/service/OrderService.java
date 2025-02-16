@@ -2,21 +2,15 @@ package com.eshop.service.order_product_service.service;
 
 import com.eshop.service.order_product_service.dto.CreateOrderRequest;
 import com.eshop.service.order_product_service.exception.OrderNotFoundException;
-import com.eshop.service.order_product_service.exception.ProductNotFoundException;
 import com.eshop.service.order_product_service.model.Order;
 import com.eshop.service.order_product_service.model.OrderStatus;
 import com.eshop.service.order_product_service.model.Product;
 import com.eshop.service.order_product_service.repository.OrderRepository;
-import com.eshop.service.order_product_service.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +28,7 @@ public class OrderService {
     }
 
     private Order setOrderFromRequest(Order order, CreateOrderRequest req) {
-        final BigDecimal[] total = { BigDecimal.ZERO };
+        final BigDecimal[] total = {BigDecimal.ZERO};
         req.getProductsQuantity().forEach((productId, quantity) -> {
             Product product = productService.getProductById(productId);
 
