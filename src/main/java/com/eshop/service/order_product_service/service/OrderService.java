@@ -39,17 +39,15 @@ public class OrderService {
     }
 
     private Order setOrderFromRequest(Order order, CreateOrderRequest req) {
-        order.setProductsQuantity(req.getProductsQuantity());
-        Set<Product> products = new HashSet<>();
-        BigDecimal total = new BigDecimal(0);
+        final BigDecimal[] total = { BigDecimal.ZERO };
         req.getProductsQuantity().forEach((productId, quantity) -> {
             Product product = getProductById(productId);
-            total.add(product.getPrice().multiply(new BigDecimal(quantity)));
-            products.add(product);
+
+            total[0] = total[0].add(product.getPrice().multiply(new BigDecimal(quantity)));
         });
-        order.setProducts(products);
-        order.setTotalAmount(total);
+        order.setTotalAmount(total[0]);
         order.setStatus(OrderStatus.PENDING);
+        order.setProductsQuantity(req.getProductsQuantity());
         return order;
     }
 

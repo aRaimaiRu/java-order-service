@@ -16,20 +16,11 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
 
-@ElementCollection
-    @CollectionTable(name = "order_product", joinColumns = @JoinColumn(name = "order_id"))
+    @ElementCollection
+    @CollectionTable(name = "order_product", joinColumns = @JoinColumn(name = "order_id", referencedColumnName = "orderId"))
     @MapKeyColumn(name = "product_id")
     @Column(name = "quantity")
     private Map<Long, Integer> productsQuantity;
-
-    @ManyToMany
-    @JoinTable(
-            name = "order_product",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-
-    )
-    private Set<Product> products;
 
     @Column(nullable = false)
     private BigDecimal totalAmount;
