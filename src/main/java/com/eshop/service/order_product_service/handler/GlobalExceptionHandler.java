@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import java.util.List;
 import java.util.logging.Logger;
 
-import static com.eshop.service.order_product_service.handler.BusinessErrorCodes.ORDER_NOT_FOUND;
-import static com.eshop.service.order_product_service.handler.BusinessErrorCodes.PRODUCT_NOT_FOUND;
+import static com.eshop.service.order_product_service.handler.BusinessErrorCodes.*;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -24,7 +23,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(OrderNotFoundException.class)
     public ResponseEntity<ExceptionResponse> handleOrderNotFoundException(OrderNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+        return ResponseEntity.status(ORDER_NOT_FOUND.getHttpStatus()).body(
                 ExceptionResponse.builder()
                         .errorCode(ORDER_NOT_FOUND.getCode())
                         .description(ORDER_NOT_FOUND.getDescription())
@@ -35,7 +34,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<ExceptionResponse> handleProductNotFoundException(ProductNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+        return ResponseEntity.status(PRODUCT_NOT_FOUND.getHttpStatus()).body(
                 ExceptionResponse.builder()
                         .errorCode(PRODUCT_NOT_FOUND.getCode())
                         .description(PRODUCT_NOT_FOUND.getDescription())
@@ -62,10 +61,10 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NotEnoughStockException.class)
     public ResponseEntity<ExceptionResponse> handleNotEnoughStockException(NotEnoughStockException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+        return ResponseEntity.status(NOT_ENOUGH_STOCK.getHttpStatus()).body(
                 ExceptionResponse.builder()
-                        .errorCode(HttpStatus.BAD_REQUEST.value())
-                        .description("Not enough stock")
+                        .errorCode(NOT_ENOUGH_STOCK.getCode())
+                        .description(NOT_ENOUGH_STOCK.getDescription())
                         .error(ex.getMessage())
                         .build()
         );
@@ -73,9 +72,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(OrderProcessedException.class)
     public ResponseEntity<ExceptionResponse> handleOrderProcessedException(OrderProcessedException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+        return ResponseEntity.status(ORDER_PROCESSED.getHttpStatus()).body(
                 ExceptionResponse.builder()
-                        .errorCode(HttpStatus.FORBIDDEN.value())
+                        .errorCode(ORDER_PROCESSED.getCode())
                         .description("Order is already processed")
                         .error(ex.getMessage())
                         .build()
