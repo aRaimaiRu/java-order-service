@@ -7,7 +7,7 @@ import com.eshop.service.order_product_service.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -33,11 +33,13 @@ public class ProductService {
         return productRepository.save(product);
     }
 
+
     public Product updateProduct(Long id, CreateProductRequest req) {
         Product product = this.getProductById(id);
         product.setName(req.getName());
         product.setPrice(req.getPrice());
         product.setDescription(req.getDescription());
+        product.setStock(req.getStock());
         return productRepository.save(product);
     }
 
