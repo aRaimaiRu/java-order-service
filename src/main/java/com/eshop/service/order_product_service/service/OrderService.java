@@ -23,12 +23,7 @@ import java.util.Set;
 public class OrderService {
     private final OrderRepository orderRepository;
 
-    private final ProductRepository ProductRepository;
-
-    public Product getProductById(Long id) throws ProductNotFoundException {
-        return ProductRepository.findById(id).orElseThrow(ProductNotFoundException::new);
-    }
-
+    private final ProductService productService;
 
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
@@ -41,7 +36,7 @@ public class OrderService {
     private Order setOrderFromRequest(Order order, CreateOrderRequest req) {
         final BigDecimal[] total = { BigDecimal.ZERO };
         req.getProductsQuantity().forEach((productId, quantity) -> {
-            Product product = getProductById(productId);
+            Product product = productService.getProductById(productId);
 
             total[0] = total[0].add(product.getPrice().multiply(new BigDecimal(quantity)));
         });
@@ -64,6 +59,7 @@ public class OrderService {
     }
 
     public void deleteOrder(Long id) {
+        productService.getProductById(id);
         orderRepository.deleteById(id);
     }
 }
