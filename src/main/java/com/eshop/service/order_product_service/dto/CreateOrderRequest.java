@@ -14,5 +14,6 @@ import java.util.Map;
 public class CreateOrderRequest {
     @NotNull(message = "Products quantity map cannot be null")
     @NotEmpty(message = "Products quantity is required")
-    private Map<@Digits(integer = 10, fraction = 0, message = "Stock must be a number") Long, @NotNull @Min(value = 1, message = "Quantity must be at least 1") Integer> productsQuantity;
+    private Map<@Digits(integer = 15, fraction = 0, message = "Must be a valid product ID") Long,
+            @NotNull @Min(value = 1, message = "Quantity must be at least 1") Integer> productsQuantity;
 }
